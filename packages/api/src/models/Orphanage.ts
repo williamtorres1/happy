@@ -4,7 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany, // Relacionamento de um orfanato para muitas imagens
+  JoinColumn,
 } from 'typeorm';
+
+import Image from './Image';
 
 @Entity('orphanages') // Associa o model abaixo com a tabela orphanages
 export default class Orphanage {
@@ -31,6 +35,13 @@ export default class Orphanage {
 
   @Column()
   open_on_weekends: boolean;
+
+  @OneToMany(() => Image, image => image.orphanage, {
+    cascade: ['insert', 'update'],
+    // insert/update => automaticamente cadastrar ou atualizar as imagens do Orphanage
+  })
+  @JoinColumn({ name: 'orphanage_id' })
+  images: Image[];
 
   @CreateDateColumn()
   created_at: number;

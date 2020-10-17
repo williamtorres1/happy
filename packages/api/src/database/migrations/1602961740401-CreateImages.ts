@@ -23,6 +23,16 @@ export default class CreateImages1602961740401 implements MigrationInterface {
             name: 'orphanage_id',
             type: 'uuid',
           },
+          {
+            name: 'created_at',
+            type: 'integer',
+            default: 'now()',
+          },
+          {
+            name: 'updated_at',
+            type: 'integer',
+            default: 'now()',
+          },
         ],
         foreignKeys: [
           {

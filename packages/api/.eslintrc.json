@@ -33,7 +33,7 @@
     ],
     "prettier/prettier": "error",
     "no-console": "off",
-    "camelcase": "warn"
+    "camelcase": "off"
   },
   "settings": {
     "import/resolver": {
