@@ -1,2 +1,3 @@
-# setup-nodejs
-This repository is my template for NodeJS projects, using TypeScript, Prettier, ESLint and EditorConfig
+# happy-api
+
+Api Rest with Node.JS and TypeScript maded by Happy project on NextLevelWeek#03.

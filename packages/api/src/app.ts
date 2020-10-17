@@ -1,12 +1,13 @@
 import express from 'express';
-
 // connect with database
 import './database/connection';
 
+import routes from './routes';
+
 const app = express();
 
-app.get('/', (request, response) => {
-  return response.json({ message: 'Hello World' });
-});
+app.use(express.json());
+
+app.use(routes);
 
 export default app;

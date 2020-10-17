@@ -18,9 +18,12 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false, //Integrar classe ao typeorm
     "baseUrl": ".",
     "paths": {
-      "@models/*": ["./src/models/*"]
+      "@models/*": ["./src/models/*"],
+      "@controllers/*": ["./src/controllers/*"],
+      "@config/*": ["./src/config/*"]
     }
   },
   "include": [

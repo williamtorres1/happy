@@ -45,3 +45,7 @@ ormconfig.json
 
 # Ignore database
 *.sqlite
+
+# ignore images
+uploads/*
+!uploads/.gitkeep
