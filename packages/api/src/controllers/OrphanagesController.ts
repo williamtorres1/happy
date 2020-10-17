@@ -12,58 +12,50 @@ export default {
       relations: ['images'],
     });
 
-    return response.json(orphanagesView.renderMany(orphanages));
+    return response.json(orphanagesView.renderMany(orphanage));
   },
   async show(request: Request, response: Response) {
-    try {
-      const { id } = request.params;
+    const { id } = request.params;
 
-      const orphanagesRepository = getRepository(Orphanage);
+    const orphanagesRepository = getRepository(Orphanage);
 
-      const orphanage = await orphanagesRepository.findOneOrFail(id, {
-        relations: ['images'],
-      });
+    const orphanage = await orphanagesRepository.findOneOrFail(id, {
+      relations: ['images'],
+    });
 
-      return response.json(orphanagesView.render(orphanage));
-    } catch (err) {
-      return response.json({ error: err.message });
-    }
+    return response.json(orphanagesView.render(orphanage));
   },
 
   async create(request: Request, response: Response): Promise<Orphanage | any> {
-    try {
-      const {
-        name,
-        latitude,
-        longitude,
-        about,
-        instructions,
-        opening_hours,
-        open_on_weekends,
-      } = request.body;
+    const {
+      name,
+      latitude,
+      longitude,
+      about,
+      instructions,
+      opening_hours,
+      open_on_weekends,
+    } = request.body;
 
-      const requestImages = request.files as Express.Multer.File[];
+    const requestImages = request.files as Express.Multer.File[];
 
-      const images = requestImages.map(image => {
-        return { path: image.filename };
-      });
+    const images = requestImages.map(image => {
+      return { path: image.filename };
+    });
 
-      const orphanagesRepository = getRepository(Orphanage);
+    const orphanagesRepository = getRepository(Orphanage);
 
-      const orphanage = orphanagesRepository.create({
-        name,
-        latitude,
-        longitude,
-        about,
-        instructions,
-        opening_hours,
-        open_on_weekends,
-        images,
-      });
-      await orphanagesRepository.save(orphanage);
-      return response.status(201).json(orphanage);
-    } catch (err) {
-      return response.json({ error: err.message });
-    }
+    const orphanage = orphanagesRepository.create({
+      name,
+      latitude,
+      longitude,
+      about,
+      instructions,
+      opening_hours,
+      open_on_weekends,
+      images,
+    });
+    await orphanagesRepository.save(orphanage);
+    return response.status(201).json(orphanage);
   },
 };
