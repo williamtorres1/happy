@@ -1,10 +1,10 @@
 {
-  "name": "setup-nodejs",
+  "name": "happy-api",
   "version": "1.0.0",
-  "description": "This repository is my template for NodeJS projects, using TypeScript, Prettier, ESLint and EditorConfig",
+  "description": "Repositório para api do evento da Rocketseat Next Level Week #3",
   "main": "src/server.ts",
-  "repository": "git@github.com:williamtorres1/setup-nodejs.git",
-  "author": "William Torres <williamtorres074@gmail.com>",
+  "repository": "git@github.com:williamtorres1/happy-api.git",
+  "author": "William Torres <contatowilliamtorres@gmail.com>",
   "license": "MIT",
   "private": false,
   "scripts": {
@@ -14,7 +14,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.0",
+    "typeorm": "^0.2.28"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
