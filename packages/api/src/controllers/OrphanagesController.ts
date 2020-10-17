@@ -1,20 +1,18 @@
 import { Request, Response } from 'express';
-
 import { getRepository } from 'typeorm';
 
 import Orphanage from '@models/Orphanage';
+import orphanagesView from '@views/orphanagesView';
 
 export default {
   async index(request: Request, response: Response) {
-    try {
-      const orphanagesRepository = getRepository(Orphanage);
+    const orphanagesRepository = getRepository(Orphanage);
 
-      const orphanages = await orphanagesRepository.find();
+    const orphanage = await orphanagesRepository.find({
+      relations: ['images'],
+    });
 
-      return response.json(orphanages);
-    } catch (err) {
-      return response.json({ error: err.message });
-    }
+    return response.json(orphanagesView.renderMany(orphanages));
   },
   async show(request: Request, response: Response) {
     try {
@@ -22,9 +20,11 @@ export default {
 
       const orphanagesRepository = getRepository(Orphanage);
 
-      const orphanages = await orphanagesRepository.findOneOrFail(id);
+      const orphanage = await orphanagesRepository.findOneOrFail(id, {
+        relations: ['images'],
+      });
 
-      return response.json(orphanages);
+      return response.json(orphanagesView.render(orphanage));
     } catch (err) {
       return response.json({ error: err.message });
     }
