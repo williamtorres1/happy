@@ -19,7 +19,7 @@ function OrphanagesMap(): JSX.Element {
   const [orphanages, setOrphanages] = useState<Orphanage[]>([])
 
   useEffect(() => {
-    api.get('/orphanages').then(response => {
+    api.get('orphanages').then(response => {
       setOrphanages(response.data)
     })
   }, [])
