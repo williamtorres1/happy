@@ -10,8 +10,9 @@ import { ScrollView,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { RectButton } from 'react-native-gesture-handler';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker'
+import api from '../../services/api';
 interface OrphanageDataRouteParams {
   position: {
     latitude: number;
@@ -26,19 +27,33 @@ export default function OrphanageData() {
   const [opening_hours, setOpeningHours] = useState('')
   const [open_on_weekends, setOpenOnWeekends] = useState(true)
   const [images, setImages] = useState<string[]>([])
+
   const route = useRoute()
   const { position: { latitude, longitude }} = route.params as OrphanageDataRouteParams
 
-  function handleCreateOrphanage() {
-    console.log({
-      name,
-      about,
-      instructions,
-      opening_hours,
-      open_on_weekends,
-      latitude,
-      longitude
+  const navigation = useNavigation()
+
+  async function handleCreateOrphanage() {
+    const orphanageData = new FormData()
+
+    orphanageData.append('name', name)
+    orphanageData.append('about', about)
+    orphanageData.append('instructions', instructions)
+    orphanageData.append('opening_hours', opening_hours)
+    orphanageData.append('open_on_weekends', String(open_on_weekends))
+    orphanageData.append('latitude', String(latitude))
+    orphanageData.append('longitude', String(longitude))
+
+    images.forEach((image, index) => {
+      orphanageData.append('images', {
+        name: `image_${index}.jpg`,
+        type: 'images/jpg',
+        uri: image,
+      } as any)
     })
+
+    await api.post('orphanages', orphanageData)
+    navigation.navigate('OrphanagesMap')
   }
   async function handleSelectImages() {
     const { granted } = await ImagePicker.requestCameraRollPermissionsAsync();
