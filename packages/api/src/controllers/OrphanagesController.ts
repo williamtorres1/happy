@@ -35,7 +35,7 @@ export default {
       about,
       instructions,
       opening_hours,
-      open_on_weekends,
+      open_on_weekends: openOnWeekendsOnString,
     } = request.body;
 
     const requestImages = request.files as Express.Multer.File[];
@@ -46,6 +46,7 @@ export default {
 
     const orphanagesRepository = getRepository(Orphanage);
 
+    const open_on_weekends = JSON.parse(openOnWeekendsOnString);
     const data = {
       name,
       latitude,
@@ -56,7 +57,6 @@ export default {
       open_on_weekends,
       images,
     };
-
     const schema = Yup.object().shape({
       name: Yup.string().required('Nome obrigatório'), // Para personalizar mensagem
       latitude: Yup.number().required(),
